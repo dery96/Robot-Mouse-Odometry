@@ -1,0 +1,227 @@
+$backgr: #FAFAFA
+$max-height-pro: 10em
+$odstepy_miedzy_kolumnami: -1px
+
+$tekst: black
+$kolor-tla-headera: #333
+$header-tekst-kol: #fff
+$kolor-kolumny: #fff
+$kolor-obramowania-kolumn: #E5E5E5
+$kolor-tla-pustych-strm: #FAFAFA
+
+// Flexbox Properties
+@import "flex-properties.sass"
+
+// Mixins
+@mixin obramowanie
+    border-radius: 0
+    border: 1px solid $kolor-obramowania-kolumn
+
+@mixin cien
+  box-shadow: 0 0 5px rgba(0, 0, 0, 1)
+
+*
+  box-sizing: border-box
+  margin: 0
+  padding: 0
+
+body
+  background-color: $backgr
+  font-family: Droid Sans
+
+
+header
+  background-color: $kolor-tla-headera
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2)
+  margin-bottom: $odstepy_miedzy_kolumnami
+  @include cien
+
+  h1
+    // text-shadow: -1px 0 #050E17, 0 1px #050E17, 1px 0 #050E17, 0 -1px #050E17
+    padding: 1em
+    font-weight: bold
+    color: $header-tekst-kol
+
+  p
+    font-size: 12px
+    padding-left: 20em
+
+.info, .map
+  background-color: $kolor-kolumny
+  // box-shadow: 0 0 50px rgba(0, 0, 0, 0.2)
+  @include obramowanie
+  padding: 5px
+
+.info
+  margin-right: $odstepy_miedzy_kolumnami
+  // padding: 5px
+  text-align: left
+
+  // .opis
+  //   text-align: left
+  //   // padding: 5px
+  //   line-height: 1.5em
+  //   // text-indent: 2em
+  //   white-space: pre
+
+
+  .checkbox-area
+    width: 8em
+    display: flex
+    flex-flow: row wrap
+    justify-content: space-between
+    align-items: center
+
+
+  .controle
+    align-items: center
+
+    p
+      margin-right: 0.5em
+
+    .stat
+      margin-right: 1em
+
+    .controle > *
+      margin-right: 0.5em
+
+  #circle
+    width: 1.5em
+    height: 1.5em
+    background: rgb(147, 21, 21)
+    border-radius: 100%
+    border: 1px solid $kolor-obramowania-kolumn
+    display: inline-block
+
+
+  #circle, .controle, p, .stat, span
+    margin: 0
+    padding: 0
+
+.button-area
+  background-color: $kolor-kolumny
+
+.myButton
+	box-shadow: inset 0px 1px 0px 0px #ffffff
+	background: linear-gradient(to bottom, #fafafa 5%, #e9e9e9 100%)
+	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#fafafa', endColorstr='#e9e9e9',GradientType=0)
+	background-color: #fafafa
+	border-radius: 6px
+	border: 1px solid #dcdcdc
+	display: inline-block
+	cursor: pointer
+	color: #666666
+	font-family: Arial
+	font-size: 15px
+	font-weight: bold
+	padding: 7px 32px
+	text-decoration: none
+	text-shadow: 0px 1px 0px #ffffff
+
+.myButton:hover
+	background: linear-gradient(to bottom, #e9e9e9 5%, #fafafa 100%)
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e9e9e9', endColorstr='#fafafa',GradientType=0)
+	background-color: #e9e9e9
+
+.myButton:active
+	position: relative
+	top: 1px
+
+.con
+  margin: 0 auto
+
+  margin-top: 2%
+  max-height: 80rem
+  max-width: 80rem
+
+.map
+  flex-grow: 1
+  padding: 5px
+
+  align-content: stretch
+  align-self: stretch
+  align-items: stretch
+
+.block
+  background-color: $kolor-tla-pustych-strm
+  border: 1px solid #E5E5E5
+  margin: 5px
+  text-align: center
+  // max-height: 12em
+
+  #canvas
+    border: 1px solid black !important
+
+.chom
+  align-self: center
+
+.moves
+  margin-top: 1em
+
+#up, #down
+  border: 1px solid #A9A9A9
+  margin: 0 auto
+
+#left, #right
+  border: 1px solid #A9A9A9
+  margin: 0.5em
+  text-align: center
+
+#right
+  margin-right: 3em
+
+footer
+  margin-top: $odstepy_miedzy_kolumnami
+  background-color: $kolor-kolumny
+  max-height: 40px
+  height: 40px
+  margin-left: -1px
+  padding-left: -1px
+
+  max-height: 80rem
+  max-width: 80rem
+  margin: 0 auto
+
+  margin-top: -1px
+  @include obramowanie
+
+
+// Flex Properties
+
+.col:not(.col:first)
+  @include obramowanie
+
+@media (max-width: 374px)
+  header
+    p
+      margin-left: -15em
+
+
+@media (max-width: 576px)
+  .info
+    margin: 0
+    margin-bottom: $odstepy_miedzy_kolumnami
+
+    flex-basis: auto
+    max-width: 100%
+
+  .map
+    flex-direction: column
+    height: 30em
+    max-height: 30em
+
+    flex-basis: auto
+    max-width: 100%
+
+  .con
+    flex-direction: column
+
+@media (max-width: 724px)
+  #right
+    margin-right: 0
+
+@media (max-width: 992px)
+  .map
+    flex-direction: column
+    height: 30em
+    max-height: 30em

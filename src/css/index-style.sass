@@ -1,0 +1,245 @@
+// Flex Properties Starts!
+
+.row
+  display: flex
+  flex-flow: column wrap
+  text-align: center
+
+
+.col:first
+  margin: 5px
+
+.col
+  flex: 1
+  color: black
+
+.col-1
+  flex-basis: 8.333333%
+  max-width: 8.333333%
+
+.col-4
+  flex-basis: 33.333333%
+  max-width: 33.333333%
+
+.col-6
+  flex-basis: 50%
+  max-width: 50%
+
+.col-8
+  flex-basis: 66.666667%
+  max-width: 66.666667%
+
+.col-10
+  flex-basis: 83.333333%
+  max-width: 83.333333%
+
+.col-12
+  flex-basis: 100%
+  max-width: 100%
+
+.flex-dir-col
+  flex-direction: column
+
+.flex-dir-row
+  flex-direction: row
+
+.flex-just-space-bet
+  justify-content: space-between
+  padding-left: 10px
+  padding-right: 10px
+
+.flex-just-space-aro
+  justify-content: space-around
+
+.flex-just-sta
+  justify-content: flex-start
+
+.flex-just-end
+  justify-content: flex-end
+
+.alig-ite-end
+  align-items: flex-end
+
+.alig-ite-sta
+  align-items: flex-start
+
+.ali-ite-cent
+  align-items: center
+
+.alig-sel-cent
+  align-self: center
+// Media Queries
+
+@media all and (min-width: 1024px)
+  header
+    max-width: 60%
+
+// Website Starts
+$backgr: #fefefe
+$max-height-pro: 10em
+$odstepy_miedzy_kolumnami: -1px
+
+$tekst: #333
+$header-color: #252A34
+$header-tekst-kol: #fff
+$header-tekst-obramowanie: #333
+
+$header-tekst-1czesc: rgba(#16afe8, 1)
+
+// $header-tekst-kol: #D8315B
+
+$kolor-kolumny: #fff
+$kolor-obramowania-kolumn: #252A34
+$kolor-tla-pustych-strm: #FAFAFA
+
+$li-menu-color: white
+
+$section-color: #fefefe
+$section-tekst: white
+
+$footer-color: #1E222A
+$footer-tekst: white
+
+@mixin cien
+  box-shadow: 0 0 2px rgba(0, 0, 0, 2)
+
+@mixin obramowanie
+    border-radius: 0
+    border: 1px solid $kolor-obramowania-kolumn
+
+@mixin tekst-cien-dark
+  text-shadow: -1px 0 #050E17, 0 1px #050E17, 1px 0 #050E17, 0 -1px #050E17
+
+@mixin tekst-cien-light
+  text-shadow: -1px 0 $header-tekst-obramowanie, 0 1px $header-tekst-obramowanie, 1px 0 $header-tekst-obramowanie, 0 -1px $header-tekst-obramowanie
+
+*
+  box-sizing: border-box
+  // border: 1px solid
+  padding: 0
+  margin: 0
+
+body
+  background-image: url(data:image/png;base64,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);
+  background-color: #0094d0
+  // background-color: $backgr
+  font-size: 16px
+
+header
+  background-color: $header-color
+  height: 6rem
+  max-height: 6rem
+
+  align-content: auto
+  align-self: auto
+  align-items: center
+  max-width: 80rem
+  margin: 0 auto
+
+
+  h2:nth-child(2)
+    margin-right: 0
+    padding-right: 0
+    color: $header-tekst-1czesc
+
+  h2:nth-child(1)
+    margin-right: 0
+    padding-right: 0
+    padding-right: 0.3em
+    color: $header-tekst-kol
+    font-weight: bold
+    @include tekst-cien-light
+
+
+.header-bckg
+  background-color: $header-color
+  @include cien
+
+nav
+  ul
+    list-style-type: none
+    height: 40px
+    align-self: baseline
+    align-content:flex-start
+    align-items: baseline
+    margin-right: 0
+    padding-right: 0
+
+    li
+      margin-right: 0.5em
+      font-size: 16px
+      font-weight: bold
+      text-transform: uppercase
+
+      color: $li-menu-color
+      // height: 2em
+
+      align-self: center
+      align-content: center
+      align-items: center
+
+      // &::after
+      //   content: " |"
+
+      &:last-child
+        margin-right: 0 auto
+        padding-right: 0 auto
+
+section
+  margin: 0 auto
+  background-image: url('../images/dog_1.jpg')
+  margin-top: 1%
+  max-height: 80rem
+  // width: 800px
+  // max-width: 50em
+  // max-width: 80rem
+  height: calc(100vh - 156px)
+
+  background-color: $section-color
+  color: $section-tekst
+
+  & > *
+    @include obramowanie
+
+  h2
+    text-align: left
+    max-height: 2rem
+    color: $header-color !important
+
+
+article
+  margin: 0 auto
+  max-height: 8.5rem
+  padding-top: 1rem
+  text-align: left
+  // max-width: 60rem
+
+aside
+  border: 1px solid
+  min-height: 1em
+  // padding-top: 1rem
+
+figure
+  border: 1px solid
+  background-color: #333
+  margin-right: 1em
+  height: 10em
+  img
+    padding: 0
+    margin: 0
+    max-width: 100%
+    max-height: 100%
+
+  &:last-child
+    margin-right: 0
+
+
+footer
+  @include cien
+  @include obramowanie
+
+footer
+  height: 3rem
+  max-height: 3rem
+  background-color: $footer-color
+  color: $footer-tekst
