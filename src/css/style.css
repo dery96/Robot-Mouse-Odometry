@@ -202,8 +202,20 @@ header p {
   text-align: center;
 }
 
-.block #canvas {
-  border: 1px solid black !important;
+#canvas-area {
+  position: relative;
+}
+
+#canvas-area canvas {
+  position: absolute;
+}
+
+.canvasMap {
+  z-index: 2;
+}
+
+.canvasHover {
+  z-index: 1;
 }
 
 .chom {

@@ -149,8 +149,17 @@ header
   text-align: center
   // max-height: 12em
 
-  #canvas
-    border: 1px solid black !important
+#canvas-area
+  position: relative
+
+  canvas
+    position: absolute
+
+.canvasMap
+   z-index: 2
+
+.canvasHover
+   z-index: 1
 
 .chom
   align-self: center

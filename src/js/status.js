@@ -1,137 +1,74 @@
-window.onload= myFunction; // Wykona sie wtedy kiedy cala strona zostanie wczytana
-// document.addEventListener("DOMContentLoaded") = myFunction;
-// Wykona po zaladowaniu DOM, ale np przed tym jak obrazki sie załaduja
+import {getData, getJSON, saveJSON} from './request';
+import mouseHandler from './handlers';
 
-function myFunction() {
-  var input = document.getElementById ("controlSwitchOption");
-  input.onclick = checkState;
-  sendRequest()
-  var requestLoop = setInterval(sendRequest, 1500);
-}
+var randomnumber = function(min, max) {return Math.floor(Math.random() * (max - min + 1)) + min}
 
-function checkState () {
-  var input = document.getElementById ("controlSwitchOption")
-  if (input.checked) {
-    document.getElementById('circle').style.cssText = "background: green"
-  }
-  else {
-    var pending = true
-    // if (pending) {
-    //   document.getElementById('circle').style.cssText = "background: rgb(227, 135, 25)"
-    // }
-    // else {
-      document.getElementById('circle').style.cssText = "background: rgb(147, 21, 21)"
-    // }
-
-  }
-}
-
-function sendRequest() {
-  // It recive actual mapGrid state from python server
-  // console.log("> Time :)");
-  if (window.XMLHttpRequest) {
-    var req = new XMLHttpRequest();
-    req.open('GET', 'map.json', true);
-    req.onreadystatechange = function (aEvt) {
-      if (req.readyState == 4) {
-        if (req.status == 200) {
-          var mapConfig = mapConfigInit(JSON.parse(req.responseText));
-        }
-      }
-    }
-  }
-  req.send(null);
-  if (window.XMLHttpRequest) {
-    var req = new XMLHttpRequest();
-    req.open('GET', 'pos.json', true);
-    req.onreadystatechange = function (aEvt) {
-      if (req.readyState == 4) {
-        if (req.status == 200) {
-          var mapPos = JSON.parse(req.responseText);
-          console.log(mapPos);
-          mapGenerate(mapConfig, mapPos);
-        }
-      }
-    }
-  }
-  req.send(null);
+var mapConfig = {
+    map: null,
+    pos: null,
+    mapWidth: document.getElementById('ctx').offsetWidth - 5,
+    mapHeight: document.getElementById('ctx').offsetHeight - 5,
+    elementsAcross: null,
+    elementsDown: null,
+    tileWidth:  function () {return Math.ceil(this.mapWidth / (this.elementsAcross))},
+    tileHeight: function () {return Math.ceil(this.mapHeight / (this.elementsDown))},
 };
 
-var mapConfigInit = function(positionRobot) {
-  this.positionRobot = positionRobot;
-  this.blockWidth = document.getElementById("canvasMap").offsetWidth;
-  this.blockHeight = document.getElementById("canvasMap").offsetHeight;
+var oldPos = null
 
-  this.elementsAcross = positionRobot[0].length;
-  this.elementsDown = positionRobot.length;
+function mapGenerate() {
+  // This promise function will get map.json and pos.json into array
+  getJSON('./src/json/map.json').then(function(response) {
+    mapConfig.map = response;
+    mapConfig.elementsAcross = mapConfig.map[0].length;
+    mapConfig.elementsDown = mapConfig.map.length;
 
-  this.mapWidth = Math.ceil(this.blockWidth / (this.elementsAcross));
-  this.mapHeight = Math.ceil(this.blockHeight / (this.elementsDown));
+  }).then(getJSON('./src/json/pos.json').then(function(response) {
+    mapConfig.pos = response
+  }).then(function() {
+    _mapGenerate(mapConfig);
+  })
+)}
 
-  this.ship = new Image();
-  this.ship.src = 'ship.jpg';
-};
+function _mapGenerate(mapConfig) {
+  // Draw map Array
+  var colors = ['#ffffff', '#e41e65', '#333333', '#e1874b', '#455ec6'];
+  var map = mapConfig.map
+  var pos = mapConfig.pos
 
-function mapGenerate(mapConfig, mapPos) {
-  // Put python list of positions into html by canvas
-  // It's auto-adjust to div size that It can resize for browser/window width, height.
-  // mapGenerateInfo(mapConfig);
-  var pos_x = 0
-  var pos_y = 0
+  document.getElementById('pos').innerHTML = "X: <strong>" + pos['x'] + "</strong> Y: <strong>" + pos['y'] + "</strong>"
 
-  var old_pos_x = 0
-  var old_pos_y = 0
-
-  var canvas = document.getElementById('canvasMap');
-  canvas.width = blockWidth;
-  canvas.height = blockHeight;
-
-  var colors = ['#ffffff', '#333333', '#e41e65', '#455ec6'];
+  var canvas = document.getElementById('canvasMap')
+  canvas.width = mapConfig.mapWidth
+  canvas.height = mapConfig.mapHeight
   if (canvas.getContext){
     var ctx = canvas.getContext('2d');
-    for (var y = 0; y < elementsDown; y++) {
-      for (var x = 0; x < elementsAcross; x++) {
-        tile = positionRobot[y][x];
+    for (var y = 0; y < mapConfig.elementsDown; y++) {
+      for (var x = 0; x < mapConfig.elementsAcross; x++) {
+        let tile = map[y][x];
         if (tile === 3) {
-          pos_x = y
-          pos_y = x
-          console.log(pos_x, pos_y);
-          if(pos_x === old_pos_x && pox_y === old_pox_y) {
-
+          if (JSON.stringify(oldPos) === JSON.stringify(pos)) {
+            ctx.fillStyle = colors[randomnumber(2, 3)];
+          } else {
+            ctx.fillStyle = colors[2];
           }
-          pos_info = document.getElementById("pos_info");
-          ctx.fillStyle = colors[2];
-          old_p
         }
         else {
-          ctx.fillStyle = colors[1];
+          ctx.fillStyle = colors[0];
         }
-        //Math.floor((Math.random() * 2) + 1)
-        ctx.fillRect(Math.ceil(x * mapWidth), Math.ceil(y*mapHeight) , mapWidth, mapHeight);
-      }
-    }
-    // ctx.save();
-    // ctx.translate(x+w/2, y+h/2);
-    // ctx.rotate(Math.PI/7);
-    // ctx.translate(-x-w/2, -y-h/2);
-    // if ((pos_x - 2) < 0 || (pos_y - 2) < 0) {
-    //   ctx.drawImage( ship, 0,0, 166 , 170, (pos_x) * mapWidth, (pos_y) * mapHeight, 5*mapWidth, 5*mapHeight);
-    // } else {
-    //   ctx.drawImage( ship, 0,0, 166 , 170, (pos_x - 2) * mapWidth, (pos_y - 2) * mapHeight, 5*mapWidth, 5*mapHeight);
-    // }
-
-    // ctx.restore();
-  }
-  else {
-    alert("Your browser doesn't support canvas")
-  }
+        ctx.fillRect(Math.ceil(x * mapConfig.tileWidth()), Math.ceil(y * mapConfig.tileHeight()) , mapConfig.tileWidth(), mapConfig.tileHeight());
+      };
+    };
+  };
+  oldPos = pos
 };
 
-function mapGenerateInfo() {
-  console.log("Width", blockWidth);
-  console.log("Height", blockHeight);
-  console.log("elementsDown", elementsDown);
-  console.log("elementsAcross", elementsAcross);
-  console.log("mapHeight:", mapHeight, "mapWidth:", mapWidth);
-  console.log(positionRobot);
+// Init ClickHandler
+mouseHandler(document.getElementById('ctx'), mapConfig)
+mapGenerate()
+
+document.getElementById('clickTileButton').onclick = function() {
+  var object = JSON.parse(localStorage.getItem('clickTile'))
+  saveJSON('src/json/clickTile.json', object);
 };
+var requestLoop = setInterval(mapGenerate, 1000);

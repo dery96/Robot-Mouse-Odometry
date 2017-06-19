@@ -10,9 +10,9 @@ from threading import Thread
 
 from mouse import Mouse  # class that stores mouse movement sum
 
-m_file = open("/dev/input/mouse1", "rb")
-file_pos = open("/var/www/html/pos.json", "r+")
-file_map = open("/var/www/html/map.json", "r+")
+m_file = open("/dev/input/mouse3", "rb")
+file_pos = open("../src/json/pos.json", "r+")
+file_map = open("../src/json/map.json", "r+")
 file_map_pattern = ''
 
 m = Mouse(m_file)
@@ -31,7 +31,7 @@ def server_opts(action=''):
         if action == 0:
             print(m.mouse_pos())
         elif action == 1:
-            close_file = open("/var/www/html/py/close_state.json", "w")
+            close_file = open("../src/json/close_state.json", "w")
             close_file.write(json.dumps([True]))
             close_file.close()
             print("--" * 10)
@@ -49,20 +49,20 @@ def show_mouse_pos(file_pos, file_map):
 
     while True:
         if saved:
-            file_pos = open("/json/pos.json", "r+")
-            file_map = open("/json/map.json", "r+")
+            file_pos = open("../src/json/pos.json", "r+")
+            file_map = open("../src/json/map.json", "r+")
             saved = False
         '''In fact that our m.mouse_pos recieve pos that can be negative'''
         '''so, the (0,0) point will be always in the middle of python list'''
 
         data_pos = json.loads(m.mouse_pos())
         # data_map = json.loads(file_map.read().replace('\n', ''))
-
         new_pos[0], new_pos[1] = data_pos['x'], data_pos['y']
 
         if new_pos != old_pos:
             '''start update pos if they changed'''
             old_pos_fixed = get_pos_fix(old_pos, len(data_map), len(data_map[0]))
+
             data_map[old_pos_fixed[0]][old_pos_fixed[1]] = 1
 
         new_pos_fixed = get_pos_fix(new_pos, len(data_map), len(data_map[0]))
@@ -124,15 +124,15 @@ def show_mouse_pos(file_pos, file_map):
 
 def map_pattern():
     '''Initial map pattern list'''
-    file_map_pattern = open("/json/map_pattern.json", "r+")
+    file_map_pattern = open("../src/json/map_pattern.json", "r+")
     # file_map_pattern.close()
     return json.loads(file_map_pattern.read().replace('\n', ''))
 
 
 def get_pos_fix(pos, x, y, pos_fix=[0, 0]):
     '''Becouse mouse have negative positions, we have to rescale positions to real list values'''
-    pos_fix[0] = pos[0] + ceil((x - 1) / 2)
-    pos_fix[1] = pos[1] + ceil((y - 1) / 2)
+    pos_fix[0] = int(pos[0] + ceil((x - 1) / 2))
+    pos_fix[1] = int(pos[1] + ceil((y - 1) / 2))
     return pos_fix
 
 t1 = Thread(target=running_mouse_loop, args=[])

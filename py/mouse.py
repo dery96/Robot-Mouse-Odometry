@@ -11,7 +11,7 @@ class Mouse(object):
     def __init__(self, mouse_file):
         self.file = mouse_file
         self.state = False
-
+        
         self.mouse_value = 0
         self.mouse_action_sum = [0, 0]
         self.square_size = 5  # cm size of one square in list
@@ -53,7 +53,7 @@ class Mouse(object):
                 print("mouse_displacement_sum -- Closing!")
                 break
 
-            print("x: %d [cm], y: %d [cm]" % (self.x_move / self.square_size, self.y_move / self.square_size))
+            # print("x: %d [cm], y: %d [cm]" % (self.x_move / self.square_size, self.y_move / self.square_size))
             # print("robot_position_square:[%d][%d]" % (self.x_move / 25, self.y_move / 25))
 
         file.close()

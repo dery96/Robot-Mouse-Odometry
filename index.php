@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="src/css/style.css">
-  <script src="src/js/status.js" charset="utf-8"></script>
   <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
   <link rel="icon" href="src/img/favicon.ico"/>
   <title>Control</title>
@@ -21,7 +20,7 @@
 
     <p style="text-align: left; white-space: pre-line; padding: 5px;">Wpisz: <span style="block"><input style="float: right; width: 80%;" type="text" name="" value=""></span>
     <br><strong>Akcja:</strong> Wyznacza tor ruchu
-    <br>Pozycja: X: -- Y: --
+    <br>Pozycja: <span id="pos"></span>
     Czas Uruchomiony: 01h:10m:01s
     Przemierzona Odległośc: 1000 m
     Stan Kamery: ----
@@ -43,20 +42,28 @@
 
       </div>
       <button type="button" name="button" class="myButton" id="down">&darr;</button>
+      <button type="button" name="button" class="clickTileButton" id="clickTileButton" style="margin: 0 auto; padding: 5px; width: 100px; margin-top: 20px">Run</button>
     </div>
+    <p style="text-align: right; font-size: 12px">Mysz: (<span id="pos_info">x, y</span>)</p>
+    <p style="">Zaznaczony Tile <span id="clickTile"></span></p>
+
   </div>
 
   <div class="row col-8 flex-dir-row map">
-    <div class="col row block flex-dir-row chomikos">
-      <canvas class="col" id="canvasMap"></canvas>
+    <div class="col row block flex-dir-row" id="ctx">
+        <div id="canvas-area">
+            <canvas id="canvasMap"></canvas>
+            <canvas id="canvasHover"></canvas>
+            <canvas id="canvasClick"></canvas>
+        </div>
     </div>
     <div class="col block">a</div>
   </div>
-
  </section>
 
  <footer class="row flex-dir-row flex-just-space-bet ali-ite-cent">
   <span>Copyright &copy; 2017</span> <span>dominikszyja.pl</span>
  </footer>
+ <script src="src/js/dist/status_bundle.js" charset="utf-8"></script>
 </body>
 </html>

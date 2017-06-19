@@ -1,0 +1,15 @@
+{
+  "name": "Robot",
+  "version": "1.0.0",
+  "main": "status.js",
+  "repository": "https://github.com/dery96/robot-mouse-odometry.git",
+  "author": "dery96 <dery1996@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "webpack": "^2.6.1"
+  }
+}
