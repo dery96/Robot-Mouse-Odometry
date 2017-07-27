@@ -56,6 +56,10 @@
   justify-content: space-around;
 }
 
+.flex-just-space-cen {
+  justify-content: center;
+}
+
 .just-end {
   justify-content: flex-end;
 }

@@ -11,7 +11,7 @@ class Mouse(object):
     def __init__(self, mouse_file):
         self.file = mouse_file
         self.state = False
-        
+
         self.mouse_value = 0
         self.mouse_action_sum = [0, 0]
         self.square_size = 5  # cm size of one square in list
@@ -21,7 +21,7 @@ class Mouse(object):
 
     def mouse_pos(self):
         '''returns json object of x,y position'''
-        return ("{\"x\": %d, \"y\": %d}" % (int(self.x_move / 5), int(self.y_move / 5)))
+        return ("{\"x\": %d, \"y\": %d}" % (int(self.x_move / self.square_size), int(self.y_move / self.square_size)))
 
     def get_mouse_event(self):
         '''read raw_mouse file data given'''
@@ -29,7 +29,7 @@ class Mouse(object):
         x, y = struct.unpack("bb", buf[1:])
         return x, y
 
-    def mouse_displacement_sum(self, dpi=3):
+    def mouse_displacement_sum(self, dpi=2):
         '''dpi:
             1: 450 dpi
             2: 900 dpi

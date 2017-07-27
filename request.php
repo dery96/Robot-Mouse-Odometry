@@ -11,7 +11,7 @@ if (isset($_GET["q"])) {
   $h = $_GET["q"];
 
   // Write $h to a file
-  $fp = 'src/json/clickTile.json';
+  $fp = 'src/json/action.json';
   $fp = fopen($fp,"w");
   fwrite($fp, $h);
   fclose($fp);

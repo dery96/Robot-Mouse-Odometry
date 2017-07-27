@@ -26,10 +26,10 @@ export function getJSON(url) {
   });
 }
 
-export function saveJSON(file, object) {
-  // Send objecto to request.php as URL
+export function saveJSON(object) {
+  // Send object to request.php as URL
   var str = JSON.stringify(object);
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST","request.php?q=" + str, true);
-  xmlhttp.send();
+  xmlhttp.send(null);
 }
